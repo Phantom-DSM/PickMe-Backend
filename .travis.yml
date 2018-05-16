@@ -20,3 +20,17 @@ notifications:
     recipients:
       - nooheat1228@gmail.com
   slack: phantom-dsm:7W9Vudzuxs5bfytqUUFQOSQ7
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: chanmyung-playground-deploy
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: public_read
+    wait-until-deployed: true
+    on:
+      repo: Phantom-DSM/PickMe-Backend
+      branch: master
+
