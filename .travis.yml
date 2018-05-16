@@ -21,6 +21,11 @@ notifications:
       - nooheat1228@gmail.com
   slack: phantom-dsm:7W9Vudzuxs5bfytqUUFQOSQ7
 
+before_deploy:
+  - zip -r pickme *
+  - mkdir -p deploy
+  - mv pickme.zip deploy/pickme.zip
+
 deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY
@@ -30,6 +35,7 @@ deploy:
     skip_cleanup: true
     acl: public_read
     wait-until-deployed: true
+    local_dir: deploy
     on:
       repo: Phantom-DSM/PickMe-Backend
       branch: master
