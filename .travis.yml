@@ -19,3 +19,4 @@ notifications:
   email:
     recipients:
       - nooheat1228@gmail.com
+  slack: phantom-dsm:7W9Vudzuxs5bfytqUUFQOSQ7
