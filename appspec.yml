@@ -1,0 +1,5 @@
+version: 0.0
+os: linux
+files:
+  - source: / # S3 버킷에서 복사할 파일의 위치
+    destination: /home/ec2-user/app/travis/build/ # zip파일을 복사해 압축을 풀 위치
