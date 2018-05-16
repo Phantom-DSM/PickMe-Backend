@@ -8,6 +8,6 @@ public class Hello {
 
     @GetMapping("/")
     public String hello() {
-        return "hello";
+        return "<h1>hello! your all of CodeDeploy finished!</h1><br><p>next step is the 'NginX!</p>";
     }
 }
