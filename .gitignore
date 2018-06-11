@@ -133,7 +133,9 @@ gradle-app.setting
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
 
+# 요청 샘플
+.idea/httpRequests/
+RequestSamples/
 
 # End of https://www.gitignore.io/api/java,macos,gradle,intellij
-# application.yml
-application.yml
+

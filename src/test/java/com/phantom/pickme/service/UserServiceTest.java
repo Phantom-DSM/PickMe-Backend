@@ -1,8 +1,11 @@
 package com.phantom.pickme.service;
 
-import com.phantom.pickme.domain.user.User;
+import com.phantom.pickme.domain.user.*;
 import com.phantom.pickme.dto.UserSignupDto;
 import com.phantom.pickme.service.user.UserService;
+import com.phantom.pickme.service.userCode.UserCodeService;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +20,31 @@ import static junit.framework.TestCase.assertTrue;
 @SpringBootTest
 public class UserServiceTest {
 
+    private static String USER_CODE;
+
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserCodeService userCodeService;
+
+    @Autowired
+    private UserCodeRepository userCodeRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Before
+    public void setup() {
+        USER_CODE = userCodeRepository.save(new UserCode("TestUser", 30333, Sex.MAN)).getUserCode();
+    }
+
     @Test
     public void 테스트_회원가입() {
+        UserCode userCodeObj = userCodeService.getUserCodeInfoFromUserCodeStr(USER_CODE);
         UserSignupDto dto = UserSignupDto.builder()
-                .userCode("asdbd3141cac67asd67abr")
-                .id("id")
+                .userCode(userCodeObj.getUserCode())
+                .username("TestUsername")
                 .password("pw")
                 .profileImgSrc("profileImgSrc")
                 .phone("010-1111-1111")
@@ -35,14 +55,17 @@ public class UserServiceTest {
                 .postNumber("65535")
                 .baseAddr("baseAddr")
                 .detailAddr("detailAddr")
-                .bio("bio").build();
+                .bio("bio")
+                .build();
 
-        User user = dto.toEntity();
-
-        User savedUser = userService.save(user);
-
+        User user = userService.signup(dto);
         assertNotNull("Saved user should not be null", user);
-        assertEquals(savedUser.id, dto.id);
+        assertEquals(user.getUsername(), dto.getUsername());
+    }
 
+    @After
+    public void cleanup() {
+        userCodeRepository.deleteAll();
+        userRepository.deleteAll();
     }
 }

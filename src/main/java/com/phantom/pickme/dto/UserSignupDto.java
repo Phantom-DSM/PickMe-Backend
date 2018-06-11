@@ -1,6 +1,5 @@
 package com.phantom.pickme.dto;
 
-import com.phantom.pickme.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,24 +10,24 @@ import lombok.Setter;
 @Setter
 public class UserSignupDto {
 
-    String userCode;
-    public String id;
-    String password;
-    String profileImgSrc;
-    String phone;
-    int birthYear;
-    int birthMonth;
-    int birthDay;
-    String email;
-    String postNumber;
-    String baseAddr;
-    String detailAddr;
-    String bio;
+    private String userCode;
+    private String username;
+    private String password;
+    private String profileImgSrc;
+    private String phone;
+    private int birthYear;
+    private int birthMonth;
+    private int birthDay;
+    private String email;
+    private String postNumber;
+    private String baseAddr;
+    private String detailAddr;
+    private String bio;
 
     @Builder
-    public UserSignupDto(String userCode, String id, String password, String profileImgSrc, String phone, int birthYear, int birthMonth, int birthDay, String email, String postNumber, String baseAddr, String detailAddr, String bio) {
+    public UserSignupDto(String userCode, String username, String password, String profileImgSrc, String phone, int birthYear, int birthMonth, int birthDay, String email, String postNumber, String baseAddr, String detailAddr, String bio) {
         this.userCode = userCode;
-        this.id = id;
+        this.username = username;
         this.password = password;
         this.profileImgSrc = profileImgSrc;
         this.phone = phone;
@@ -42,21 +41,4 @@ public class UserSignupDto {
         this.bio = bio;
     }
 
-    public User toEntity() {
-        return User.builder()
-                .userCode(userCode)
-                .id(id)
-                .password(password)
-                .profileImgSrc(profileImgSrc)
-                .phone(phone)
-                .birthYear(birthYear)
-                .birthMonth(birthMonth)
-                .birthDay(birthDay)
-                .email(email)
-                .postNumber(postNumber)
-                .baseAddr(baseAddr)
-                .detailAddr(detailAddr)
-                .bio(bio)
-                .build();
-    }
 }

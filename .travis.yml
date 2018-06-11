@@ -6,6 +6,19 @@ branches:
   only:
     - master
 
+addons:
+  apt:
+    sources:
+      - mysql-5.7-trusty
+    packages:
+      - mysql-server
+      - mysql-client
+
+before_install:
+  - mysql -e "CREATE DATABASE IF NOT EXISTS pickme;"
+  - mysql -e "USE pickme;"
+  - mysql -u root --password="" pickme < test/pickme-dbstructure.sql
+
 # Travis CI 서버의 Home
 cache:
   directories:
