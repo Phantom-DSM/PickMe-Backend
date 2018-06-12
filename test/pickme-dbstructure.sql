@@ -352,6 +352,34 @@ CREATE TABLE `teacher` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `un_confirmed_user`
+--
+
+DROP TABLE IF EXISTS `un_confirmed_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `un_confirmed_user` (
+  `user_id` char(32) NOT NULL,
+  `user_code` char(32) DEFAULT NULL,
+  `email` varchar(45) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(200) NOT NULL,
+  `phone` varchar(13) NOT NULL,
+  `birth_day` int(2) NOT NULL,
+  `birth_month` int(2) NOT NULL,
+  `birth_year` int(4) NOT NULL,
+  `post_number` varchar(45) NOT NULL,
+  `base_addr` varchar(45) NOT NULL,
+  `detail_addr` varchar(45) NOT NULL,
+  `bio` varchar(100) NOT NULL,
+  `profile_img_src` varchar(60) DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  KEY `FK_un_confirmed_user_user_code_idx` (`user_code`),
+  CONSTRAINT `FK_un_confirmed_user_user_code` FOREIGN KEY (`user_code`) REFERENCES `user_code_tbl` (`user_code`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `user`
 --
 
@@ -384,7 +412,10 @@ CREATE TABLE `user` (
   `last_password_reset_date` datetime(3) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  UNIQUE KEY `phone_UNIQUE` (`phone`),
+  UNIQUE KEY `stu_num_UNIQUE` (`stu_num`),
+  UNIQUE KEY `profile_img_src_UNIQUE` (`profile_img_src`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -472,4 +503,4 @@ CREATE TABLE `user_skill` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-12 10:57:04
+-- Dump completed on 2018-06-12 20:28:43

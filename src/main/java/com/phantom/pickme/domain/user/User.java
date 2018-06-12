@@ -25,13 +25,13 @@ public class User implements UserDetails {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String userId;
 
-    @Column(nullable = false, length = 45)
+    @Column(nullable = false, length = 45, unique = true)
     private String email;
 
     @Column(nullable = false, columnDefinition = "TINYINT NOT NULL DEFAULT 1")
     private Boolean emailOpen = true;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 100, unique = true)
     private String username;
 
     @Column(nullable = false, length = 200)
@@ -40,14 +40,14 @@ public class User implements UserDetails {
     @Column(nullable = false, length = 45)
     private String name;
 
-    @Column(nullable = false, length = 5)
+    @Column(nullable = false, length = 5, unique = true)
     private Integer stuNum;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
-    @Column(nullable = false, length = 13)
+    @Column(nullable = false, length = 13, unique = true)
     private String phone;
 
     @Column(nullable = false, columnDefinition = "TINYINT NOT NULL DEFAULT 1")
@@ -80,7 +80,7 @@ public class User implements UserDetails {
     @Column
     private Integer desiredMaxSal;
 
-    @Column(length = 60)
+    @Column(length = 60, unique = true)
     private String profileImgSrc;
 
     @CreationTimestamp

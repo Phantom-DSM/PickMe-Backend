@@ -1,4 +1,4 @@
-package com.phantom.pickme.dto;
+package com.phantom.pickme.dto.auth;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UserSignupDto {
+public class UserSignupRequestDto {
 
     private String userCode;
     private String username;
@@ -25,7 +25,7 @@ public class UserSignupDto {
     private String bio;
 
     @Builder
-    public UserSignupDto(String userCode, String username, String password, String profileImgSrc, String phone, int birthYear, int birthMonth, int birthDay, String email, String postNumber, String baseAddr, String detailAddr, String bio) {
+    public UserSignupRequestDto(String userCode, String username, String password, String profileImgSrc, String phone, int birthYear, int birthMonth, int birthDay, String email, String postNumber, String baseAddr, String detailAddr, String bio) {
         this.userCode = userCode;
         this.username = username;
         this.password = password;
