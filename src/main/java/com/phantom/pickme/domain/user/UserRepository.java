@@ -2,6 +2,7 @@ package com.phantom.pickme.domain.user;
 
 import com.phantom.pickme.dto.profile.ProfileResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -29,4 +30,16 @@ public interface UserRepository extends JpaRepository<User, String> {
             "FROM User u " +
             "WHERE u.userId = :userId")
     Optional<ProfileResponseDto> readUserProfileById(@Param("userId") String userId);
+
+    @Modifying
+    @Query("UPDATE User u " +
+            "SET u.emailOpen = CASE WHEN(u.emailOpen = TRUE) THEN FALSE ELSE TRUE END " +
+            "WHERE u.userId = :userId")
+    int toggleEmailPrivacy(@Param("userId") String userId);
+
+    @Modifying
+    @Query("UPDATE User u " +
+            "SET u.phoneOpen = CASE WHEN(u.phoneOpen = TRUE) THEN FALSE ELSE TRUE END " +
+            "WHERE u.userId = :userId")
+    int togglePhonePrivacy(@Param("userId") String userId);
 }
