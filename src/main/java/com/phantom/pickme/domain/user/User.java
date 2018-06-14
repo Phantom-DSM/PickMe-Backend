@@ -1,5 +1,7 @@
 package com.phantom.pickme.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,11 +20,13 @@ import java.util.Collection;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonIgnoreProperties({"enabled", "accountNonExpired", "accountNonLocked", "credentialsNonExpired", "authorities"})
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @JsonIgnore
     private String userId;
 
     @Column(nullable = false, length = 45, unique = true)
@@ -84,12 +88,15 @@ public class User implements UserDetails {
     private String profileImgSrc;
 
     @CreationTimestamp
+    @JsonIgnore
     private LocalDateTime createdDate;
 
     @UpdateTimestamp
+    @JsonIgnore
     private LocalDateTime modifiedDate;
 
     @Column
+    @JsonIgnore
     private LocalDateTime lastPasswordResetDate;
 
     @Builder
