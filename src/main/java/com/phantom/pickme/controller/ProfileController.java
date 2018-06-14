@@ -1,6 +1,7 @@
 package com.phantom.pickme.controller;
 
 import com.phantom.pickme.domain.user.User;
+import com.phantom.pickme.dto.profile.PatchBirthRequestDto;
 import com.phantom.pickme.dto.profile.ProfileResponseDto;
 import com.phantom.pickme.security.JwtTokenUtil;
 import com.phantom.pickme.service.user.ProfileService;
@@ -42,6 +43,13 @@ public class ProfileController {
     public void togglePhonePrivacy(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader).substring(4);
         profileService.togglePhonePrivacy(jwtTokenUtil.getUserIdFromToken(token));
+    }
+
+    @PatchMapping("/me/profile/birth")
+    @ResponseStatus(HttpStatus.OK)
+    public void patchBirth(HttpServletRequest request, @RequestBody PatchBirthRequestDto dto) {
+        String token = request.getHeader(tokenHeader).substring(4);
+        profileService.patchBirth(jwtTokenUtil.getUserIdFromToken(token), dto);
     }
 
     @GetMapping("/users/{userId}/profile")

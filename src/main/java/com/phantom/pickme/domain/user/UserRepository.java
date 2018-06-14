@@ -1,5 +1,6 @@
 package com.phantom.pickme.domain.user;
 
+import com.phantom.pickme.dto.profile.PatchBirthRequestDto;
 import com.phantom.pickme.dto.profile.ProfileResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -42,4 +43,10 @@ public interface UserRepository extends JpaRepository<User, String> {
             "SET u.phoneOpen = CASE WHEN(u.phoneOpen = TRUE) THEN FALSE ELSE TRUE END " +
             "WHERE u.userId = :userId")
     int togglePhonePrivacy(@Param("userId") String userId);
+
+    @Modifying
+    @Query("UPDATE User u " +
+            "SET u.birthDay = :#{#dto.birthDay}, u.birthMonth = :#{#dto.birthMonth}, u.birthYear = :#{#dto.birthYear} " +
+            "WHERE u.userId = :userId")
+    int patchBirthByUserId(@Param("userId") String userId, @Param("dto") PatchBirthRequestDto dto);
 }
