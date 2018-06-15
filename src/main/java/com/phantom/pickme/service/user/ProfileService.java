@@ -83,4 +83,10 @@ public class ProfileService {
         int affectedRows = userRepository.patchEmailByUserId(myUserId, dto);
         if (affectedRows == 0) throw new UserNotFoundException(String.format("userId '%s' not found", myUserId));
     }
+
+    @Transactional
+    public void patchProfileImgSrc(String myUserId, PatchProfileImgSrcRequestDto dto) {
+        int affectedRows = userRepository.patchProfileImgSrc(myUserId, dto);
+        if (affectedRows == 0) throw new UserNotFoundException(String.format("userId '%s' not found", myUserId));
+    }
 }

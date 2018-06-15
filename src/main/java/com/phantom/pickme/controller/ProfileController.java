@@ -93,6 +93,13 @@ public class ProfileController {
         profileService.patchName(jwtTokenUtil.getUserIdFromToken(token), dto);
     }
 
+    @PatchMapping("/me/profile/profileImgSrc")
+    @ResponseStatus(HttpStatus.OK)
+    public void patchProfileImgSrc(HttpServletRequest request, @RequestBody PatchProfileImgSrcRequestDto dto) {
+        String token = request.getHeader(tokenHeader).substring(4);
+        profileService.patchProfileImgSrc(jwtTokenUtil.getUserIdFromToken(token), dto);
+    }
+
     @GetMapping("/users/{userId}/profile")
     public ProfileResponseDto readProfile(@PathVariable("userId") String userId) {
         return profileService.getUserProfile(userId);

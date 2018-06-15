@@ -85,4 +85,10 @@ public interface UserRepository extends JpaRepository<User, String> {
             "SET u.email = :#{#dto.email} " +
             "WHERE u.userId = :userId")
     int patchEmailByUserId(@Param("userId") String userId, @Param("dto") PatchEmailDto dto);
+
+    @Modifying
+    @Query("UPDATE User u " +
+            "SET u.profileImgSrc = :#{#dto.profileImgSrc} " +
+            "WHERE u.userId = :userId")
+    int patchProfileImgSrc(@Param("userId") String userId, @Param("dto") PatchProfileImgSrcRequestDto dto);
 }
