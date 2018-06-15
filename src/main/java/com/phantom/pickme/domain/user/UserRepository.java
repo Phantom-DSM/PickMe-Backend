@@ -66,4 +66,23 @@ public interface UserRepository extends JpaRepository<User, String> {
             "SET u.phone = :#{#dto.phone} " +
             "WHERE u.userId = :userId")
     int patchPhoneNumberByUserId(@Param("userId") String userId, @Param("dto") PatchPhoneNumberRequestDto dto);
+
+    @Modifying
+    @Query("UPDATE User u " +
+            "SET u.bio =  :#{#dto.bio} " +
+            "WHERE u.userId = :userId")
+    int patchBioByUserId(@Param("userId") String userId, @Param("dto") PatchBioRequestDto dto);
+
+    @Modifying
+    @Query("UPDATE User u " +
+            "SET u.name = :#{#dto.name} " +
+            "WHERE u.userId = :userId")
+    int patchNameByUserId(@Param("userId") String userId, @Param("dto") PatchNameRequestDto dto);
+
+
+    @Modifying
+    @Query("UPDATE User u " +
+            "SET u.email = :#{#dto.email} " +
+            "WHERE u.userId = :userId")
+    int patchEmailByUserId(@Param("userId") String userId, @Param("dto") PatchEmailDto dto);
 }

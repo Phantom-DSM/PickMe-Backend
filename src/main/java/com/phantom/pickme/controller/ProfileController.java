@@ -72,6 +72,27 @@ public class ProfileController {
         profileService.patchPhoneNumber(jwtTokenUtil.getUserIdFromToken(token), dto);
     }
 
+    @PatchMapping("/me/profile/bio")
+    @ResponseStatus(HttpStatus.OK)
+    public void patchBio(HttpServletRequest request, @RequestBody PatchBioRequestDto dto) {
+        String token = request.getHeader(tokenHeader).substring(4);
+        profileService.patchBio(jwtTokenUtil.getUserIdFromToken(token), dto);
+    }
+
+    @PatchMapping("/me/profile/email")
+    @ResponseStatus(HttpStatus.OK)
+    public void patchEmail(HttpServletRequest request, @RequestBody PatchEmailDto dto) {
+        String token = request.getHeader(tokenHeader).substring(4);
+        profileService.patchEmail(jwtTokenUtil.getUserIdFromToken(token), dto);
+    }
+
+    @PatchMapping("/me/profile/name")
+    @ResponseStatus(HttpStatus.OK)
+    public void patchName(HttpServletRequest request, @RequestBody PatchNameRequestDto dto) {
+        String token = request.getHeader(tokenHeader).substring(4);
+        profileService.patchName(jwtTokenUtil.getUserIdFromToken(token), dto);
+    }
+
     @GetMapping("/users/{userId}/profile")
     public ProfileResponseDto readProfile(@PathVariable("userId") String userId) {
         return profileService.getUserProfile(userId);

@@ -58,8 +58,29 @@ public class ProfileService {
 
     @Transactional
     public void patchPhoneNumber(String myUserId, PatchPhoneNumberRequestDto dto) {
-        if (userRepository.existsUserByPhone(dto.getPhone())) throw new AlreadyExistsException(String.format("phone '%s' already exists", dto.getPhone()));
+        if (userRepository.existsUserByPhone(dto.getPhone()))
+            throw new AlreadyExistsException(String.format("phone '%s' already exists", dto.getPhone()));
         int affectedRows = userRepository.patchPhoneNumberByUserId(myUserId, dto);
+        if (affectedRows == 0) throw new UserNotFoundException(String.format("userId '%s' not found", myUserId));
+    }
+
+    @Transactional
+    public void patchBio(String myUserId, PatchBioRequestDto dto) {
+        int affectedRows = userRepository.patchBioByUserId(myUserId, dto);
+        if (affectedRows == 0) throw new UserNotFoundException(String.format("userId '%s' not found", myUserId));
+    }
+
+    @Transactional
+    public void patchName(String myUserId, PatchNameRequestDto dto) {
+        int affectedRows = userRepository.patchNameByUserId(myUserId, dto);
+        if (affectedRows == 0) throw new UserNotFoundException(String.format("userId '%s' not found", myUserId));
+    }
+
+    @Transactional
+    public void patchEmail(String myUserId, PatchEmailDto dto) {
+        if (userRepository.existsUserByEmail(dto.getEmail()))
+            throw new AlreadyExistsException(String.format("email '%s' already exists", dto.getEmail()));
+        int affectedRows = userRepository.patchEmailByUserId(myUserId, dto);
         if (affectedRows == 0) throw new UserNotFoundException(String.format("userId '%s' not found", myUserId));
     }
 }
