@@ -1,5 +1,6 @@
 package com.phantom.pickme.domain.user;
 
+import com.phantom.pickme.dto.profile.PatchAddressRequestDto;
 import com.phantom.pickme.dto.profile.PatchBirthRequestDto;
 import com.phantom.pickme.dto.profile.ProfileResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -49,4 +50,10 @@ public interface UserRepository extends JpaRepository<User, String> {
             "SET u.birthDay = :#{#dto.birthDay}, u.birthMonth = :#{#dto.birthMonth}, u.birthYear = :#{#dto.birthYear} " +
             "WHERE u.userId = :userId")
     int patchBirthByUserId(@Param("userId") String userId, @Param("dto") PatchBirthRequestDto dto);
+
+    @Modifying
+    @Query("UPDATE User u " +
+            "SET u.postNumber = :#{#dto.postNumber}, u.baseAddr = :#{#dto.baseAddr}, u.detailAddr = :#{#dto.detailAddr} " +
+            "WHERE u.userId = :userId")
+    int patchAddressByUserId(@Param("userId") String userId, @Param("dto") PatchAddressRequestDto dto);
 }

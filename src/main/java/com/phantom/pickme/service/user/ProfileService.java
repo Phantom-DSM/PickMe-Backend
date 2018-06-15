@@ -2,6 +2,7 @@ package com.phantom.pickme.service.user;
 
 import com.phantom.pickme.domain.user.User;
 import com.phantom.pickme.domain.user.UserRepository;
+import com.phantom.pickme.dto.profile.PatchAddressRequestDto;
 import com.phantom.pickme.dto.profile.PatchBirthRequestDto;
 import com.phantom.pickme.dto.profile.ProfileResponseDto;
 import com.phantom.pickme.exception.UserNotFoundException;
@@ -41,6 +42,12 @@ public class ProfileService {
     @Transactional
     public void patchBirth(String myUserId, PatchBirthRequestDto dto) {
         int affectedRows = userRepository.patchBirthByUserId(myUserId, dto);
+        if (affectedRows == 0) throw new UserNotFoundException(String.format("userId '%s' not found", myUserId));
+    }
+
+    @Transactional
+    public void patchAddress(String myUserId, PatchAddressRequestDto dto) {
+        int affectedRows = userRepository.patchAddressByUserId(myUserId, dto);
         if (affectedRows == 0) throw new UserNotFoundException(String.format("userId '%s' not found", myUserId));
     }
 }
