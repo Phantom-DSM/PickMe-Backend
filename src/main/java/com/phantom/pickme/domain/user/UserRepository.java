@@ -1,8 +1,6 @@
 package com.phantom.pickme.domain.user;
 
-import com.phantom.pickme.dto.profile.PatchAddressRequestDto;
-import com.phantom.pickme.dto.profile.PatchBirthRequestDto;
-import com.phantom.pickme.dto.profile.ProfileResponseDto;
+import com.phantom.pickme.dto.profile.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -56,4 +54,16 @@ public interface UserRepository extends JpaRepository<User, String> {
             "SET u.postNumber = :#{#dto.postNumber}, u.baseAddr = :#{#dto.baseAddr}, u.detailAddr = :#{#dto.detailAddr} " +
             "WHERE u.userId = :userId")
     int patchAddressByUserId(@Param("userId") String userId, @Param("dto") PatchAddressRequestDto dto);
+
+    @Modifying
+    @Query("UPDATE User u " +
+            "SET u.desiredMinSal = :#{#dto.desiredMinSal}, u.desiredMaxSal = :#{#dto.desiredMaxSal} " +
+            "WHERE u.userId = :userId")
+    int patchDesiredSalByUserId(@Param("userId") String userId, @Param("dto") PatchDesiredSalRequestDto dto);
+
+    @Modifying
+    @Query("UPDATE User u " +
+            "SET u.phone = :#{#dto.phone} " +
+            "WHERE u.userId = :userId")
+    int patchPhoneNumberByUserId(@Param("userId") String userId, @Param("dto") PatchPhoneNumberRequestDto dto);
 }

@@ -2,9 +2,8 @@ package com.phantom.pickme.service.user;
 
 import com.phantom.pickme.domain.user.User;
 import com.phantom.pickme.domain.user.UserRepository;
-import com.phantom.pickme.dto.profile.PatchAddressRequestDto;
-import com.phantom.pickme.dto.profile.PatchBirthRequestDto;
-import com.phantom.pickme.dto.profile.ProfileResponseDto;
+import com.phantom.pickme.dto.profile.*;
+import com.phantom.pickme.exception.AlreadyExistsException;
 import com.phantom.pickme.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +47,19 @@ public class ProfileService {
     @Transactional
     public void patchAddress(String myUserId, PatchAddressRequestDto dto) {
         int affectedRows = userRepository.patchAddressByUserId(myUserId, dto);
+        if (affectedRows == 0) throw new UserNotFoundException(String.format("userId '%s' not found", myUserId));
+    }
+
+    @Transactional
+    public void patchDesiredSal(String myUserId, PatchDesiredSalRequestDto dto) {
+        int affectedRows = userRepository.patchDesiredSalByUserId(myUserId, dto);
+        if (affectedRows == 0) throw new UserNotFoundException(String.format("userId '%s' not found", myUserId));
+    }
+
+    @Transactional
+    public void patchPhoneNumber(String myUserId, PatchPhoneNumberRequestDto dto) {
+        if (userRepository.existsUserByPhone(dto.getPhone())) throw new AlreadyExistsException(String.format("phone '%s' already exists", dto.getPhone()));
+        int affectedRows = userRepository.patchPhoneNumberByUserId(myUserId, dto);
         if (affectedRows == 0) throw new UserNotFoundException(String.format("userId '%s' not found", myUserId));
     }
 }

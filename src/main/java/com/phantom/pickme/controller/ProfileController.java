@@ -1,9 +1,7 @@
 package com.phantom.pickme.controller;
 
 import com.phantom.pickme.domain.user.User;
-import com.phantom.pickme.dto.profile.PatchAddressRequestDto;
-import com.phantom.pickme.dto.profile.PatchBirthRequestDto;
-import com.phantom.pickme.dto.profile.ProfileResponseDto;
+import com.phantom.pickme.dto.profile.*;
 import com.phantom.pickme.security.JwtTokenUtil;
 import com.phantom.pickme.service.user.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +56,20 @@ public class ProfileController {
     public void patchAddress(HttpServletRequest request, @RequestBody PatchAddressRequestDto dto) {
         String token = request.getHeader(tokenHeader).substring(4);
         profileService.patchAddress(jwtTokenUtil.getUserIdFromToken(token), dto);
+    }
+
+    @PatchMapping("/me/profile/desiredSal")
+    @ResponseStatus(HttpStatus.OK)
+    public void patchDesiredSal(HttpServletRequest request, @RequestBody PatchDesiredSalRequestDto dto) {
+        String token = request.getHeader(tokenHeader).substring(4);
+        profileService.patchDesiredSal(jwtTokenUtil.getUserIdFromToken(token), dto);
+    }
+
+    @PatchMapping("/me/profile/phone")
+    @ResponseStatus(HttpStatus.OK)
+    public void patchPhoneNumber(HttpServletRequest request, @RequestBody PatchPhoneNumberRequestDto dto) {
+        String token = request.getHeader(tokenHeader).substring(4);
+        profileService.patchPhoneNumber(jwtTokenUtil.getUserIdFromToken(token), dto);
     }
 
     @GetMapping("/users/{userId}/profile")
