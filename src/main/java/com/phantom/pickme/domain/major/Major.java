@@ -1,5 +1,7 @@
 package com.phantom.pickme.domain.major;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.phantom.pickme.dto.view.View;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,9 +25,11 @@ public class Major {
 
     @Id
     @Column(name = "major_name")
+    @JsonView(View.Resume.class)
     private String majorName;
 
     @CreationTimestamp
+    @JsonView(View.Resume.class)
     private LocalDateTime createdDate;
 
     public Major(String userId, String majorName) {

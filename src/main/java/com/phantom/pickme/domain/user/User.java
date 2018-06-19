@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.phantom.pickme.domain.certificate.Certificate;
+import com.phantom.pickme.domain.certificate.CertificateKind;
 import com.phantom.pickme.domain.major.Major;
 import com.phantom.pickme.domain.skill.Skill;
 import com.phantom.pickme.dto.view.View;
@@ -19,6 +20,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
@@ -195,6 +197,13 @@ public class User implements UserDetails {
         if (majors == null)
             majors = new HashSet<>();
         majors.add(new Major(userId, majorName));
+        return this;
+    }
+
+    public User addCertificate(CertificateKind kind, String agency, String result, LocalDate grantedDate) {
+        if (certificates == null)
+            certificates = new HashSet<>();
+        certificates.add(new Certificate(userId, kind, agency, result, grantedDate));
         return this;
     }
 }
