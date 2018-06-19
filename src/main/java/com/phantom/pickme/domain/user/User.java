@@ -1,7 +1,13 @@
 package com.phantom.pickme.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.phantom.pickme.domain.certificate.Certificate;
+import com.phantom.pickme.domain.major.Major;
+import com.phantom.pickme.domain.skill.Skill;
+import com.phantom.pickme.dto.view.View;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +21,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -26,77 +35,107 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @JsonIgnore
+    @JsonView({View.Profile.class, View.Resume.class})
     private String userId;
 
     @Column(nullable = false, length = 45, unique = true)
+    @JsonView({View.Profile.class, View.Resume.class})
     private String email;
 
     @Column(nullable = false, columnDefinition = "TINYINT NOT NULL DEFAULT 1")
+    @JsonView({View.Profile.class, View.Resume.class})
     private Boolean emailOpen = true;
 
     @Column(nullable = false, length = 100, unique = true)
+    @JsonView({View.Profile.class, View.Resume.class})
     private String username;
 
     @Column(nullable = false, length = 200)
     private String password;
 
     @Column(nullable = false, length = 45)
+    @JsonView({View.Profile.class, View.Resume.class})
     private String name;
 
     @Column(nullable = false, length = 5, unique = true)
+    @JsonView({View.Profile.class, View.Resume.class})
     private Integer stuNum;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
+    @JsonView({View.Profile.class, View.Resume.class})
     private Sex sex;
 
     @Column(nullable = false, length = 13, unique = true)
+    @JsonView({View.Profile.class, View.Resume.class})
     private String phone;
 
     @Column(nullable = false, columnDefinition = "TINYINT NOT NULL DEFAULT 1")
+    @JsonView({View.Profile.class, View.Resume.class})
     private Boolean phoneOpen = true;
 
     @Column(nullable = false, length = 2)
+    @JsonView({View.Profile.class, View.Resume.class})
     private int birthDay;
 
     @Column(nullable = false, length = 2)
+    @JsonView({View.Profile.class, View.Resume.class})
     private int birthMonth;
 
     @Column(nullable = false, length = 4)
+    @JsonView({View.Profile.class, View.Resume.class})
     private int birthYear;
 
     @Column(nullable = false, length = 45)
+    @JsonView({View.Profile.class, View.Resume.class})
     private String postNumber;
 
     @Column(nullable = false, length = 45)
+    @JsonView({View.Profile.class, View.Resume.class})
     private String baseAddr;
 
     @Column(nullable = false, length = 45)
+    @JsonView({View.Profile.class, View.Resume.class})
     private String detailAddr;
 
     @Column(nullable = false, length = 100)
+    @JsonView({View.Profile.class, View.Resume.class})
     private String bio;
 
     @Column
+    @JsonView({View.Profile.class, View.Resume.class})
     private Integer desiredMinSal;
 
     @Column
+    @JsonView({View.Profile.class, View.Resume.class})
     private Integer desiredMaxSal;
 
     @Column(length = 60, unique = true)
+    @JsonView({View.Profile.class, View.Resume.class})
     private String profileImgSrc;
 
+    @OneToMany(targetEntity = Skill.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    @JsonView({View.Resume.class})
+    private Set<Skill> skills;
+
+    @OneToMany(targetEntity = Major.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    @JsonView({View.Resume.class})
+    private Set<Major> majors;
+
+    @OneToMany(targetEntity = Certificate.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    @JsonView({View.Resume.class})
+    private Set<Certificate> certificates;
+
     @CreationTimestamp
-    @JsonIgnore
     private LocalDateTime createdDate;
 
     @UpdateTimestamp
-    @JsonIgnore
     private LocalDateTime modifiedDate;
 
     @Column
-    @JsonIgnore
     private LocalDateTime lastPasswordResetDate;
 
     @Builder
@@ -143,5 +182,19 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public User addSkill(String skillName) {
+        if (skills == null)
+            skills = new HashSet<>();
+        skills.add(new Skill(userId, skillName));
+        return this;
+    }
+
+    public User addMajor(String majorName) {
+        if (majors == null)
+            majors = new HashSet<>();
+        majors.add(new Major(userId, majorName));
+        return this;
     }
 }

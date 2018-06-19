@@ -1,7 +1,9 @@
 package com.phantom.pickme.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.phantom.pickme.domain.user.User;
 import com.phantom.pickme.dto.profile.*;
+import com.phantom.pickme.dto.view.View;
 import com.phantom.pickme.security.JwtTokenUtil;
 import com.phantom.pickme.service.user.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ public class ProfileController {
     private ProfileService profileService;
 
     @GetMapping("/me/profile")
+    @JsonView({View.Profile.class})
     public User myProfile(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader).substring(4);
         return profileService.getMyProfile(jwtTokenUtil.getUserIdFromToken(token));
