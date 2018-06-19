@@ -26,7 +26,7 @@ public class UserSkillServiceTest {
                 userRepository.save(userRepository.findById(u.getUserId()).get()
                         .addSkill("스프링 부트")
                         .addMajor("전문분야1")
-                        .addCertificate(CertificateKind.CERTIFICATE, "산업기술협회", "자격증 취득", LocalDate.now()));
+                        .addCertificate(CertificateKind.CERTIFICATE, "정보기기운용기능사", "산업기술협회", "자격증 취득", LocalDate.now()));
             }
         } catch (IndexOutOfBoundsException e) {
 

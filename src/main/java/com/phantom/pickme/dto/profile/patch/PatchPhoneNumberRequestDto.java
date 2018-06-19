@@ -1,4 +1,4 @@
-package com.phantom.pickme.dto.profile;
+package com.phantom.pickme.dto.profile.patch;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

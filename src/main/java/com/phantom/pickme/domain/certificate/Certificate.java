@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"userId", "kind", "agency", "result", "grantedDate"})
+@EqualsAndHashCode(of = {"userId", "kind", "name", "agency", "result", "grantedDate"})
 public class Certificate {
 
     @Id
@@ -32,6 +32,10 @@ public class Certificate {
     @Enumerated(EnumType.STRING)
     @JsonView(View.Resume.class)
     private CertificateKind kind;
+
+    @Column(length = 50)
+    @JsonView(View.Resume.class)
+    private String name;
 
     @Column(length = 50)
     @JsonView(View.Resume.class)
@@ -51,9 +55,10 @@ public class Certificate {
     @UpdateTimestamp
     private LocalDateTime modifiedDate;
 
-    public Certificate(String userId, CertificateKind kind, String agency, String result, LocalDate grantedDate) {
+    public Certificate(String userId, CertificateKind kind, String name, String agency, String result, LocalDate grantedDate) {
         this.userId = userId;
         this.kind = kind;
+        this.name = name;
         this.agency = agency;
         this.result = result;
         this.grantedDate = grantedDate;

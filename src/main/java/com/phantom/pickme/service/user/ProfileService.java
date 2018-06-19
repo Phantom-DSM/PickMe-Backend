@@ -3,12 +3,12 @@ package com.phantom.pickme.service.user;
 import com.phantom.pickme.domain.user.User;
 import com.phantom.pickme.domain.user.UserRepository;
 import com.phantom.pickme.dto.profile.*;
+import com.phantom.pickme.dto.profile.patch.*;
 import com.phantom.pickme.exception.AlreadyExistsException;
 import com.phantom.pickme.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class ProfileService {

@@ -1,6 +1,7 @@
 package com.phantom.pickme.domain.user;
 
 import com.phantom.pickme.dto.profile.*;
+import com.phantom.pickme.dto.profile.patch.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

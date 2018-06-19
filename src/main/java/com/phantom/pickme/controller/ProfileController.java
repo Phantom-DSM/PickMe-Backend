@@ -3,6 +3,7 @@ package com.phantom.pickme.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.phantom.pickme.domain.user.User;
 import com.phantom.pickme.dto.profile.*;
+import com.phantom.pickme.dto.profile.patch.*;
 import com.phantom.pickme.dto.view.View;
 import com.phantom.pickme.security.JwtTokenUtil;
 import com.phantom.pickme.service.user.ProfileService;

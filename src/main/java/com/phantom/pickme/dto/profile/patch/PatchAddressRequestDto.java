@@ -1,4 +1,4 @@
-package com.phantom.pickme.dto.profile;
+package com.phantom.pickme.dto.profile.patch;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,11 +9,12 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PatchBirthRequestDto {
+public class PatchAddressRequestDto {
+
     @NotNull
-    private Integer birthDay;
+    private String postNumber;
     @NotNull
-    private Integer birthMonth;
+    private String baseAddr;
     @NotNull
-    private Integer birthYear;
+    private String detailAddr;
 }
