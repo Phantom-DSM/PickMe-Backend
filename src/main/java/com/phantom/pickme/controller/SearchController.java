@@ -20,4 +20,9 @@ public class SearchController {
     public List<String> searchSkills(@RequestParam(name = "keyword", defaultValue = "") String keyword) {
         return searchService.searchSkills(keyword);
     }
+
+    @GetMapping("/search/majors")
+    public List<String> searchMajors(@RequestParam(name = "keyword", defaultValue = "") String keyword) {
+        return searchService.searchMajors(keyword);
+    }
 }

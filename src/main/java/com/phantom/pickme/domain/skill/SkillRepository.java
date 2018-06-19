@@ -6,9 +6,10 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+
 public interface SkillRepository extends JpaRepository<Skill, SkillId> {
 
-    @Query("SELECT s.skillName " +
+    @Query("SELECT DISTINCT s.skillName " +
             "FROM Skill s " +
             "WHERE s.skillName like concat('%', :keyword, '%')")
     List<String> searchSkillNameByKeyword(@Param("keyword") String keyword);
