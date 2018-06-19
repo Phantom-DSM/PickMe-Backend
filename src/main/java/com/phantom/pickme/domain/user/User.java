@@ -199,7 +199,7 @@ public class User implements UserDetails {
         majors.add(new Major(userId, majorName));
         return this;
     }
-    // TODO: certificate entity에 name 필드 추가
+
     public User addCertificate(CertificateKind kind, String name, String agency, String result, LocalDate grantedDate) {
         if (certificates == null)
             certificates = new HashSet<>();

@@ -42,6 +42,12 @@ public class ResumeController {
         resumeService.addSkill(jwtTokenUtil.getUserIdFromToken(token), dto);
     }
 
+    @DeleteMapping("/me/resume/skills/{skillName}")
+    public void deleteSkill(HttpServletRequest request, @PathVariable("skillName") String majorName) {
+        String token = request.getHeader(tokenHeader).substring(4);
+        resumeService.deleteSkill(jwtTokenUtil.getUserIdFromToken(token), majorName);
+    }
+
     @PostMapping("/me/resume/major")
     @ResponseStatus(HttpStatus.CREATED)
     public void addMajor(HttpServletRequest request, @RequestBody PostMajorRequestDto dto) {
@@ -49,10 +55,22 @@ public class ResumeController {
         resumeService.addMajor(jwtTokenUtil.getUserIdFromToken(token), dto);
     }
 
+    @DeleteMapping("/me/resume/majors/{majorName}")
+    public void deleteMajor(HttpServletRequest request, @PathVariable("majorName") String majorName) {
+        String token = request.getHeader(tokenHeader).substring(4);
+        resumeService.deleteMajor(jwtTokenUtil.getUserIdFromToken(token), majorName);
+    }
+
     @PostMapping("/me/resume/certificate")
     @ResponseStatus(HttpStatus.CREATED)
     public void addCertificate(HttpServletRequest request, @RequestBody PostCertificateRequestDto dto) {
         String token = request.getHeader(tokenHeader).substring(4);
         resumeService.addCertificate(jwtTokenUtil.getUserIdFromToken(token), dto);
+    }
+
+    @DeleteMapping("/me/resume/certificates/{certificateId}")
+    public void deleteMajor(HttpServletRequest request, @PathVariable("certificateId") Long certificateId) {
+        String token = request.getHeader(tokenHeader).substring(4);
+        resumeService.deleteCertificate(jwtTokenUtil.getUserIdFromToken(token), certificateId);
     }
 }
