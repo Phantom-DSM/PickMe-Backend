@@ -20,11 +20,16 @@ public class UserSkillServiceTest {
 
     @Test
     public void testAddSkill() {
-        User a = userRepository.findByUsername("nooheat1228").get();
+        try {
+            User u = userRepository.findAll().get(0);
+            if (u != null) {
+                userRepository.save(userRepository.findById(u.getUserId()).get()
+                        .addSkill("스프링 부트")
+                        .addMajor("전문분야1")
+                        .addCertificate(CertificateKind.CERTIFICATE, "산업기술협회", "자격증 취득", LocalDate.now()));
+            }
+        } catch (IndexOutOfBoundsException e) {
 
-        userRepository.save(userRepository.findById("402881e463fc0bff0163fc0e30920005").get()
-                .addSkill("스프링 부트")
-                .addMajor("전문분야1")
-                .addCertificate(CertificateKind.CERTIFICATE, "산업기술협회", "자격증 취득", LocalDate.now()));
+        }
     }
 }
